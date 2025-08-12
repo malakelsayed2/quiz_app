@@ -10,6 +10,7 @@ class LoginScreen extends StatelessWidget {
   LoginScreen({super.key});
 
   final _formKey = GlobalKey<FormState>();
+  late String userName ;
 
   @override
   Widget build(BuildContext context) {
@@ -67,6 +68,9 @@ class LoginScreen extends StatelessWidget {
                       }
                       return null;
                     },
+                    onChanged: (value){
+                      userName = value ;
+                    },
                   ),
                 ),
               ),
@@ -75,6 +79,7 @@ class LoginScreen extends StatelessWidget {
                 function: () {
                   if (_formKey.currentState!.validate()) {
                     Navigator.pushReplacementNamed(
+                      arguments: userName ,
                       context,
                       RouteStringManager.quizScreen,
                     );
