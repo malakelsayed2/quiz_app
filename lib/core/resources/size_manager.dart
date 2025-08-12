@@ -19,6 +19,7 @@ class PaddingSize{
 class Width{
   static const double wid2 = 2 ;
   static const double wid4 = 4 ;
+  static const double wid50 = 50 ;
   static const double wid400 = 400 ;
 
 }

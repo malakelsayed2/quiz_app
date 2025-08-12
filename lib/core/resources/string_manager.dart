@@ -7,6 +7,7 @@ class StringManagerSplash{
 class StringManagerOnBoard{
   static const String next = "Next" ;
   static const String skip = "Skip" ;
+  static const String finish = "Finish" ;
 
 
 }
