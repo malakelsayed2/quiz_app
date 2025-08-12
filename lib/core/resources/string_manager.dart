@@ -16,6 +16,8 @@ class StringManagerLogin{
   static const String image = 'assets/images/LoginBackground.jpg';
   static const String label = "Enter your name";
   static const String start = "Start" ;
+  static const String validation = "Name is required!" ;
+
 
 
 
