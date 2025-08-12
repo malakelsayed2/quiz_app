@@ -76,7 +76,7 @@ class LoginScreen extends StatelessWidget {
                   if (_formKey.currentState!.validate()) {
                     Navigator.pushReplacementNamed(
                       context,
-                      RouteStringManager.splashScreen,
+                      RouteStringManager.quizScreen,
                     );
                   }
                 },
