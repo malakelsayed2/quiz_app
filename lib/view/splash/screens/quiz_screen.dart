@@ -1,47 +1,100 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:percent_indicator/circular_percent_indicator.dart';
 import 'package:quizapp/core/resources/color_manager.dart';
+import 'package:quizapp/core/resources/size_manager.dart';
 import 'package:quizapp/view/splash/widgets/custom_circular_percentage.dart';
+import '../../../core/resources/list_manager.dart';
+import '../widgets/custom_question_card.dart';
 
-class QuizScreen extends StatelessWidget {
+class QuizScreen extends StatefulWidget {
   const QuizScreen({super.key});
+
+  @override
+  State<QuizScreen> createState() => _QuizScreenState();
+}
+
+class _QuizScreenState extends State<QuizScreen> {
+  int? selectedValue;
 
   @override
   Widget build(BuildContext context) {
     String userName = ModalRoute.of(context)!.settings.arguments as String;
+
     return Scaffold(
-      appBar: AppBar(backgroundColor: Colors.transparent),
-      backgroundColor: Color(0xFFEFF0F3),
+      appBar: AppBar(
+        backgroundColor: Colors.transparent,
+        title: Text(
+          "7/10",
+          style: GoogleFonts.quicksand(fontWeight: FontWeight.bold),
+        ),
+        centerTitle: true,
+      ),
+      backgroundColor: Color(ColorMangager.quizBackground),
       body: Center(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            SizedBox(height: 50),
-            Stack(
-              clipBehavior: Clip.none,
-              children: [
-                Container(
-                  padding: EdgeInsets.all(15),
-                  alignment: Alignment.center,
-                  height: 300,
-                  width: 400,
-                  decoration: BoxDecoration(
-                    boxShadow: [BoxShadow(color: Colors.grey , offset: Offset(0, 10), blurRadius: 10)],
-                    borderRadius: BorderRadius.circular(25),
-                    color: Colors.white
+        child: SingleChildScrollView(
+          physics: NeverScrollableScrollPhysics(),
+          padding: EdgeInsets.all(10),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              SizedBox(height: Height.h50),
+              Stack(
+                clipBehavior: Clip.none,
+                children: [
+                  CustomQuestionCard(
+                    question: 'Hello Answer this question please',
                   ),
-                  child: Text("In what year did the United States host the FIFA World Cup for the first time?", style: GoogleFonts.quicksand(fontSize: 20, fontWeight: FontWeight.bold),),
+                  Positioned(
+                    top: -50,
+                    left: 0,
+                    right: 0,
+                    child: CustomCircularPercentage(text: "30"),
+                  ),
+                ],
+              ),
+              SizedBox(height: Height.h50),
+              SizedBox(
+                height: Height.h500,
+                child: ListView.separated(
+                  // physics: NeverScrollableScrollPhysics(),
+                  padding: EdgeInsets.all(PaddingSize.pad15),
+                  itemCount: QuizAnswerListManager.list.length,
+                  itemBuilder: (context, index) {
+                    return RadioListTile(
+                      value: index,
+                      groupValue: selectedValue,
+                      onChanged: (value) {
+                        setState(() {
+                          selectedValue = value;
+                        });
+                      },
+                      title: Text(
+                        QuizAnswerListManager.list[index],
+                        style: GoogleFonts.quicksand(
+                          fontWeight: FontWeight.bold,
+                          fontSize: FontSize.font20,
+                        ),
+                      ),
+                      activeColor: Color(ColorMangager.mainColor),
+                      // Purple radio
+                      tileColor: Colors.white,
+                      // White background
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(
+                          Radius.rad25,
+                        ), // Rounded corners
+                      ),
+                      contentPadding: EdgeInsets.symmetric(
+                        horizontal: 16,
+                        vertical: 10,
+                      ),
+                    );
+                  },
+                  separatorBuilder:(context,index) => Container(height: 15),
                 ),
-                Positioned(
-                  top: -50,
-                  left: 0,
-                  right: 0,
-                  child: CustomCircularPercentage(text: "30"),
-                ),
-              ],
-            ),
-          ],
+              ),
+            ],
+          ),
         ),
       ),
     );

@@ -1,3 +1,4 @@
+
 import '../../view/splash/widgets/onbording_widget.dart';
 
 class OnBoardingListManager {
@@ -18,4 +19,8 @@ class OnBoardingListManager {
       subtext: 'Culpa qui officia deserunt mollit anim id est laborum.',
     ),
   ];
+}
+
+class QuizAnswerListManager {
+  static List<String> list = ["1990" ,"1980" ,"1970" ,"1960"];
 }
