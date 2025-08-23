@@ -1,12 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:quizapp/core/resources/color_manager.dart';
-import 'package:quizapp/core/resources/route_manager.dart';
 import 'package:quizapp/core/resources/size_manager.dart';
 import 'package:quizapp/view/splash/widgets/custom_button.dart';
 import 'package:quizapp/view/splash/widgets/custom_circular_percentage.dart';
 import '../../../core/resources/Models/questionModel/question_list.dart';
-import '../../../core/resources/list_manager.dart';
 import '../widgets/custom_question_card.dart';
 
 class QuizScreen extends StatefulWidget {
@@ -18,17 +16,20 @@ class QuizScreen extends StatefulWidget {
 
 class _QuizScreenState extends State<QuizScreen> {
   int? selectedValue;
-  int questionNumber = 0 ;
+  int questionNumber = 0;
 
   @override
   Widget build(BuildContext context) {
-    String userName = ModalRoute.of(context)!.settings.arguments as String;
+    String userName = ModalRoute
+        .of(context)!
+        .settings
+        .arguments as String;
 
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         title: Text(
-          "${questionNumber+1}/${QuestionList.questionList.length}" ,
+          "${questionNumber + 1}/${QuestionList.questionList.length}",
           style: GoogleFonts.quicksand(fontWeight: FontWeight.bold),
         ),
         centerTitle: true,
@@ -46,13 +47,14 @@ class _QuizScreenState extends State<QuizScreen> {
                 clipBehavior: Clip.none,
                 children: [
                   CustomQuestionCard(
-                    question: QuestionList.questionList[questionNumber].question,
+                    question:
+                    QuestionList.questionList[questionNumber].question,
                   ),
                   Positioned(
                     top: -50,
                     left: 0,
                     right: 0,
-                    child: CustomCircularPercentage(text: "30"),
+                    child: CustomCircularPercentage(),
                   ),
                 ],
               ),
@@ -62,7 +64,8 @@ class _QuizScreenState extends State<QuizScreen> {
                 child: ListView.separated(
                   // physics: NeverScrollableScrollPhysics(),
                   padding: EdgeInsets.all(PaddingSize.pad15),
-                  itemCount: QuestionList.questionList[questionNumber].answers.length,
+                  itemCount:
+                  QuestionList.questionList[questionNumber].answers.length,
                   itemBuilder: (context, index) {
                     return RadioListTile(
                       value: index,
@@ -73,7 +76,9 @@ class _QuizScreenState extends State<QuizScreen> {
                         });
                       },
                       title: Text(
-                        QuestionList.questionList[questionNumber].answers[index],
+                        QuestionList
+                            .questionList[questionNumber]
+                            .answers[index],
                         style: GoogleFonts.quicksand(
                           fontWeight: FontWeight.bold,
                           fontSize: FontSize.font20,
@@ -107,15 +112,19 @@ class _QuizScreenState extends State<QuizScreen> {
         padding: EdgeInsetsGeometry.all(25),
         child: CustomButton(
           text: "Next",
-          function: selectedValue == null ? (){} : (){setState(() {
-            questionNumber++ ;
-            selectedValue = null ;
-          });},
-          colorButton: selectedValue == null ? Colors.grey : Color(ColorMangager.mainColor),
+          function: selectedValue == null ? () {} : () {
+            setState(() {
+              questionNumber++;
+              selectedValue = null;
+            });
+          },
+          colorButton: selectedValue == null
+              ? Colors.grey
+              : Color(ColorMangager.mainColor),
           colorText: Colors.white,
           fontweight: FontWeight.bold,
         ),
-      )
+      ),
     );
   }
 }

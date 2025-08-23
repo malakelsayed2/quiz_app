@@ -21,6 +21,3 @@ class OnBoardingListManager {
   ];
 }
 
-class QuizAnswerListManager {
-  static List<String> list = ["1990" ,"1980" ,"1970" ,"1960"];
-}
