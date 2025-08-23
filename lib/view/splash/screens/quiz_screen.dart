@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:quizapp/core/resources/color_manager.dart';
+import 'package:quizapp/core/resources/route_manager.dart';
 import 'package:quizapp/core/resources/size_manager.dart';
+import 'package:quizapp/view/splash/widgets/custom_button.dart';
 import 'package:quizapp/view/splash/widgets/custom_circular_percentage.dart';
 import '../../../core/resources/list_manager.dart';
 import '../widgets/custom_question_card.dart';
@@ -77,7 +79,9 @@ class _QuizScreenState extends State<QuizScreen> {
                       ),
                       activeColor: Color(ColorMangager.mainColor),
                       // Purple radio
-                      tileColor: selectedValue == index? Color(ColorMangager.mainColor).withOpacity(0.3):Colors.white,
+                      tileColor: selectedValue == index
+                          ? Color(ColorMangager.mainColor).withOpacity(0.3)
+                          : Colors.white,
                       // White background
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(
@@ -90,13 +94,23 @@ class _QuizScreenState extends State<QuizScreen> {
                       ),
                     );
                   },
-                  separatorBuilder:(context,index) => Container(height: 15),
+                  separatorBuilder: (context, index) => Container(height: 15),
                 ),
               ),
             ],
           ),
         ),
       ),
+      bottomNavigationBar: Padding(
+        padding: EdgeInsetsGeometry.all(25),
+        child: CustomButton(
+          text: "Next",
+          function: selectedValue == null ? (){} : (){Navigator.pushReplacementNamed(context, RouteStringManager.loginScreen);},
+          colorButton: selectedValue == null ? Colors.grey : Color(ColorMangager.mainColor),
+          colorText: Colors.white,
+          fontweight: FontWeight.bold,
+        ),
+      )
     );
   }
 }
