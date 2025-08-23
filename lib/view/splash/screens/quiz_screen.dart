@@ -5,6 +5,7 @@ import 'package:quizapp/core/resources/route_manager.dart';
 import 'package:quizapp/core/resources/size_manager.dart';
 import 'package:quizapp/view/splash/widgets/custom_button.dart';
 import 'package:quizapp/view/splash/widgets/custom_circular_percentage.dart';
+import '../../../core/resources/Models/questionModel/question_list.dart';
 import '../../../core/resources/list_manager.dart';
 import '../widgets/custom_question_card.dart';
 
@@ -17,6 +18,7 @@ class QuizScreen extends StatefulWidget {
 
 class _QuizScreenState extends State<QuizScreen> {
   int? selectedValue;
+  int questionNumber = 0 ;
 
   @override
   Widget build(BuildContext context) {
@@ -26,7 +28,7 @@ class _QuizScreenState extends State<QuizScreen> {
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         title: Text(
-          "7/10",
+          "${questionNumber+1}/${QuestionList.questionList.length}" ,
           style: GoogleFonts.quicksand(fontWeight: FontWeight.bold),
         ),
         centerTitle: true,
@@ -44,7 +46,7 @@ class _QuizScreenState extends State<QuizScreen> {
                 clipBehavior: Clip.none,
                 children: [
                   CustomQuestionCard(
-                    question: 'Hello Answer this question please',
+                    question: QuestionList.questionList[questionNumber].question,
                   ),
                   Positioned(
                     top: -50,
@@ -60,7 +62,7 @@ class _QuizScreenState extends State<QuizScreen> {
                 child: ListView.separated(
                   // physics: NeverScrollableScrollPhysics(),
                   padding: EdgeInsets.all(PaddingSize.pad15),
-                  itemCount: QuizAnswerListManager.list.length,
+                  itemCount: QuestionList.questionList[questionNumber].answers.length,
                   itemBuilder: (context, index) {
                     return RadioListTile(
                       value: index,
@@ -71,7 +73,7 @@ class _QuizScreenState extends State<QuizScreen> {
                         });
                       },
                       title: Text(
-                        QuizAnswerListManager.list[index],
+                        QuestionList.questionList[questionNumber].answers[index],
                         style: GoogleFonts.quicksand(
                           fontWeight: FontWeight.bold,
                           fontSize: FontSize.font20,
@@ -105,7 +107,10 @@ class _QuizScreenState extends State<QuizScreen> {
         padding: EdgeInsetsGeometry.all(25),
         child: CustomButton(
           text: "Next",
-          function: selectedValue == null ? (){} : (){Navigator.pushReplacementNamed(context, RouteStringManager.loginScreen);},
+          function: selectedValue == null ? (){} : (){setState(() {
+            questionNumber++ ;
+            selectedValue = null ;
+          });},
           colorButton: selectedValue == null ? Colors.grey : Color(ColorMangager.mainColor),
           colorText: Colors.white,
           fontweight: FontWeight.bold,
