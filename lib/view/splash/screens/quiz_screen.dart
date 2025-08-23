@@ -77,7 +77,7 @@ class _QuizScreenState extends State<QuizScreen> {
                       ),
                       activeColor: Color(ColorMangager.mainColor),
                       // Purple radio
-                      tileColor: Colors.white,
+                      tileColor: selectedValue == index? Color(ColorMangager.mainColor).withOpacity(0.3):Colors.white,
                       // White background
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(

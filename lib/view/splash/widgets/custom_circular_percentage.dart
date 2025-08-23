@@ -16,7 +16,7 @@ class CustomCircularPercentage extends StatelessWidget {
       child: CircularPercentIndicator(
         animation: true,
         restartAnimation: true,
-        animationDuration: 2000,
+        animationDuration: 6000,
         radius: Radius.rad50,
         percent: 1,
         center: Text(
