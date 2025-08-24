@@ -5,6 +5,7 @@ import 'package:quizapp/core/resources/size_manager.dart';
 import 'package:quizapp/view/splash/widgets/custom_button.dart';
 import 'package:quizapp/view/splash/widgets/custom_circular_percentage.dart';
 import '../../../core/resources/Models/questionModel/question_list.dart';
+import '../../../core/resources/route_manager.dart';
 import '../widgets/custom_question_card.dart';
 
 class QuizScreen extends StatefulWidget {
@@ -17,6 +18,7 @@ class QuizScreen extends StatefulWidget {
 class _QuizScreenState extends State<QuizScreen> {
   int? selectedValue;
   int questionNumber = 0;
+
 
   @override
   Widget build(BuildContext context) {
@@ -110,12 +112,25 @@ class _QuizScreenState extends State<QuizScreen> {
       ),
       bottomNavigationBar: Padding(
         padding: EdgeInsetsGeometry.all(25),
-        child: CustomButton(
+        child: questionNumber != QuestionList.questionList.length-1?
+        CustomButton(
           text: "Next",
           function: selectedValue == null ? () {} : () {
             setState(() {
-              questionNumber++;
+             questionNumber++;
               selectedValue = null;
+            });
+          },
+          colorButton: selectedValue == null
+              ? Colors.grey
+              : Color(ColorMangager.mainColor),
+          colorText: Colors.white,
+          fontweight: FontWeight.bold,
+        ): CustomButton(
+          text: "Finish",
+          function: selectedValue == null ? () {} : () {
+            setState(() {
+              Navigator.pushReplacementNamed(context, RouteStringManager.resultScreen);
             });
           },
           colorButton: selectedValue == null

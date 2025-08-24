@@ -18,7 +18,9 @@ class StringManagerLogin{
   static const String start = "Start" ;
   static const String validation = "Name is required!" ;
 
+}
 
+class StringManagerResults{
 
 
 }

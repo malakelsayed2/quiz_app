@@ -3,8 +3,8 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
+import 'package:quizapp/core/resources/route_manager.dart';
 import 'package:quizapp/core/resources/size_manager.dart';
-import 'package:quizapp/view/splash/screens/quiz_screen.dart';
 
 import '../../../core/resources/color_manager.dart';
 
@@ -23,18 +23,31 @@ class _CustomCircularPercentageState extends State<CustomCircularPercentage> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    for (int i = 0; i < 30; i++) {
-      Future.delayed(Duration(seconds: i), () {
-        timerStreamController.add(i);
-      });
-    }
+    timer();
   }
 
   @override
   void dispose() {
     // TODO: implement dispose
+    timerStreamController.close();
     super.dispose();
   }
+
+  void timer() {
+    for (int i = 0; i < 30; i++) {
+      Future.delayed(Duration(seconds: i), () {
+        timerStreamController.add(i);
+      });
+    }
+
+    // after 30 seconds
+     Future.delayed(const Duration(seconds: 30), () {
+      if (mounted) {
+        Navigator.pushReplacementNamed(context, RouteStringManager.resultScreen);
+      }
+    });
+  }
+
 
   @override
   Widget build(BuildContext context) {
