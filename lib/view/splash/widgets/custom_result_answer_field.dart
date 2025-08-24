@@ -11,7 +11,7 @@ class CustomResultAnswerField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsetsGeometry.all(5),
+      padding: EdgeInsetsGeometry.only(right: 20 , left: 20),
       alignment: Alignment.centerLeft,
       height: 40,
       width: 350,
@@ -20,7 +20,7 @@ class CustomResultAnswerField extends StatelessWidget {
         borderRadius: BorderRadius.circular(Radius.rad25),
       ),
       child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceAround,
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Text(
             Answer,

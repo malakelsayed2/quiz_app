@@ -6,7 +6,10 @@ import '../../../core/resources/size_manager.dart';
 import 'custom_result_answer_field.dart';
 
 class CustomWrongAnswer extends StatelessWidget {
-  const CustomWrongAnswer({Key? key}) : super(key: key);
+  final String question;
+  final int questionNumber ;
+  final String correctAnswer ;
+  const CustomWrongAnswer({super.key, required this.question, required this.questionNumber, required this.correctAnswer});
 
   @override
   Widget build(BuildContext context) {
@@ -31,7 +34,7 @@ class CustomWrongAnswer extends StatelessWidget {
             color: Colors.red,
           ),
           child: Text(
-            "1",
+            questionNumber.toString(),
             style: GoogleFonts.quicksand(
               color: Colors.white,
               fontWeight: FontWeight.bold,
@@ -58,7 +61,7 @@ class CustomWrongAnswer extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
               Text(
-                "Question hgkhjfekfkw;kf kfjlrflkwf ofkwpofkpowf owfkop",
+                question,
                 style: GoogleFonts.quicksand(
                   fontSize: 20,
                   color: Colors.white,
@@ -66,9 +69,9 @@ class CustomWrongAnswer extends StatelessWidget {
                 ),
                 textAlign: TextAlign.left,
               ),
-              Divider(),
+              Divider(thickness: 2,),
               CustomResultAnswerField(Answer: "Wrong Answer", color: Colors.red, icon: CupertinoIcons.xmark_circle_fill,),
-              CustomResultAnswerField(Answer: "Correct Answer", color: Colors.green, icon: Icons.check_circle,),
+              CustomResultAnswerField(Answer: correctAnswer, color: Colors.green, icon: Icons.check_circle,),
             ],
           ),
         ),

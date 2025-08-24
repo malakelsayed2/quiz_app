@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:quizapp/core/resources/Models/questionModel/question_list.dart';
 import 'package:quizapp/core/resources/color_manager.dart';
 import 'package:quizapp/view/splash/widgets/custom_correct_answer_card.dart';
 
@@ -15,6 +16,8 @@ class ResultsScreen extends StatelessWidget {
     //     .of(context)!
     //     .settings
     //     .arguments as String;
+    final double screenHeight = MediaQuery.of(context).size.height;
+    int answer = 1;
 
     return Scaffold(
       backgroundColor: Color(ColorMangager.mainColor),
@@ -65,6 +68,27 @@ class ResultsScreen extends StatelessWidget {
                     ),
                   ],
                 ),
+              ),
+            ),
+            SizedBox(height: 20),
+            Expanded(
+              child: ListView.separated(
+                itemBuilder: (context, index) {
+                  if (answer == 1) {
+                    return CustomCorrectAnswer(
+                      question: QuestionList.questionList[index].question,
+                      questionNumber: index + 1,
+                    );
+                  }
+                  return CustomWrongAnswer(
+                    question: QuestionList.questionList[index].question,
+                    questionNumber: index + 1,
+                    correctAnswer:
+                        QuestionList.questionList[index].correctAnswer,
+                  );
+                },
+                separatorBuilder: (context, index) => Container(height: 30),
+                itemCount: QuestionList.questionList.length,
               ),
             ),
           ],
