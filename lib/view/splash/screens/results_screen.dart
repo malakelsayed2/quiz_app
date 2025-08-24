@@ -2,9 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:quizapp/core/resources/Models/questionModel/question_list.dart';
 import 'package:quizapp/core/resources/color_manager.dart';
+import 'package:quizapp/core/resources/route_manager.dart';
 import 'package:quizapp/view/splash/widgets/custom_correct_answer_card.dart';
 
 import '../../../core/resources/size_manager.dart';
+import '../widgets/custom_button.dart';
 import '../widgets/custom_wrong_answer_card.dart';
 
 class ResultsScreen extends StatelessWidget {
@@ -16,8 +18,8 @@ class ResultsScreen extends StatelessWidget {
     //     .of(context)!
     //     .settings
     //     .arguments as String;
-    final double screenHeight = MediaQuery.of(context).size.height;
-    int answer = 1;
+
+    int answer = 0;
 
     return Scaffold(
       backgroundColor: Color(ColorMangager.mainColor),
@@ -58,7 +60,7 @@ class ResultsScreen extends StatelessWidget {
                       textAlign: TextAlign.left,
                     ),
                     Text(
-                      "Grade : 4 / 4",
+                      "Grade : 4 / ${QuestionList.questionList.length} ",
                       style: GoogleFonts.quicksand(
                         fontSize: 25,
                         color: Color(ColorMangager.mainColor),
@@ -92,6 +94,18 @@ class ResultsScreen extends StatelessWidget {
               ),
             ),
           ],
+        ),
+      ),
+      bottomNavigationBar: Padding(
+        padding: EdgeInsetsGeometry.all(25),
+        child :CustomButton(
+          text: "Retake Quiz",
+          function: (){
+            Navigator.pushReplacementNamed(context, RouteStringManager.loginScreen);
+          } ,
+          colorButton: Colors.white,
+          colorText: Color(ColorMangager.mainColor),
+          fontweight: FontWeight.bold,
         ),
       ),
     );
