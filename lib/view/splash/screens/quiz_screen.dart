@@ -19,13 +19,9 @@ class _QuizScreenState extends State<QuizScreen> {
   int? selectedValue;
   int questionNumber = 0;
 
-
   @override
   Widget build(BuildContext context) {
-    String userName = ModalRoute
-        .of(context)!
-        .settings
-        .arguments as String;
+    String userName = ModalRoute.of(context)!.settings.arguments as String;
 
     return Scaffold(
       appBar: AppBar(
@@ -50,7 +46,7 @@ class _QuizScreenState extends State<QuizScreen> {
                 children: [
                   CustomQuestionCard(
                     question:
-                    QuestionList.questionList[questionNumber].question,
+                        QuestionList.questionList[questionNumber].question,
                   ),
                   Positioned(
                     top: -50,
@@ -67,7 +63,7 @@ class _QuizScreenState extends State<QuizScreen> {
                   // physics: NeverScrollableScrollPhysics(),
                   padding: EdgeInsets.all(PaddingSize.pad15),
                   itemCount:
-                  QuestionList.questionList[questionNumber].answers.length,
+                      QuestionList.questionList[questionNumber].answers.length,
                   itemBuilder: (context, index) {
                     return RadioListTile(
                       value: index,
@@ -112,33 +108,42 @@ class _QuizScreenState extends State<QuizScreen> {
       ),
       bottomNavigationBar: Padding(
         padding: EdgeInsetsGeometry.all(25),
-        child: questionNumber != QuestionList.questionList.length-1?
-        CustomButton(
-          text: "Next",
-          function: selectedValue == null ? () {} : () {
-            setState(() {
-             questionNumber++;
-              selectedValue = null;
-            });
-          },
-          colorButton: selectedValue == null
-              ? Colors.grey
-              : Color(ColorMangager.mainColor),
-          colorText: Colors.white,
-          fontweight: FontWeight.bold,
-        ): CustomButton(
-          text: "Finish",
-          function: selectedValue == null ? () {} : () {
-            setState(() {
-              Navigator.pushReplacementNamed(context, RouteStringManager.resultScreen);
-            });
-          },
-          colorButton: selectedValue == null
-              ? Colors.grey
-              : Color(ColorMangager.mainColor),
-          colorText: Colors.white,
-          fontweight: FontWeight.bold,
-        ),
+        child: questionNumber != QuestionList.questionList.length - 1
+            ? CustomButton(
+                text: "Next",
+                function: selectedValue == null
+                    ? () {}
+                    : () {
+                        setState(() {
+                          questionNumber++;
+                          selectedValue = null;
+                        });
+                      },
+                colorButton: selectedValue == null
+                    ? Colors.grey
+                    : Color(ColorMangager.mainColor),
+                colorText: Colors.white,
+                fontweight: FontWeight.bold,
+              )
+            : CustomButton(
+                text: "Finish",
+                function: selectedValue == null
+                    ? () {}
+                    : () {
+                        setState(() {
+                          Navigator.pushReplacementNamed(
+                            arguments: userName,
+                            context,
+                            RouteStringManager.resultScreen,
+                          );
+                        });
+                      },
+                colorButton: selectedValue == null
+                    ? Colors.grey
+                    : Color(ColorMangager.mainColor),
+                colorText: Colors.white,
+                fontweight: FontWeight.bold,
+              ),
       ),
     );
   }
