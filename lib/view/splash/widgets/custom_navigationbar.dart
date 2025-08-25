@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:quizapp/core/resources/size_manager.dart';
 
 import 'custom_button.dart';
 
@@ -12,7 +13,7 @@ class CustomNavigationbar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return  Padding(
-      padding: EdgeInsetsGeometry.all(25),
+      padding: EdgeInsetsGeometry.all(PaddingSize.pad25),
       child :CustomButton(
         text: text,
         function: function ,

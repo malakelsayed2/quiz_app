@@ -22,8 +22,8 @@ class CustomWrongAnswer extends StatelessWidget {
         Container(
           padding: EdgeInsets.all(PaddingSize.pad15),
           alignment: Alignment.center,
-          height: 50,
-          width: 50,
+          height: Height.h50,
+          width: Width.wid50,
           decoration: BoxDecoration(
             boxShadow: [
               BoxShadow(
@@ -46,8 +46,8 @@ class CustomWrongAnswer extends StatelessWidget {
         Container(
           padding: EdgeInsets.all(PaddingSize.pad15),
           alignment: Alignment.center,
-          height: 250,
-          width: 350,
+          height: Height.h250,
+          width: Width.wid350,
           decoration: BoxDecoration(
             boxShadow: [
               BoxShadow(
@@ -65,15 +65,15 @@ class CustomWrongAnswer extends StatelessWidget {
               Text(
                 question,
                 style: GoogleFonts.quicksand(
-                  fontSize: 20,
+                  fontSize: FontSize.font20,
                   color: Colors.white,
                   fontWeight: FontWeight.bold,
                 ),
                 textAlign: TextAlign.left,
               ),
               Divider(thickness: 2,),
-              CustomResultAnswerField(Answer: wrongAnswer ?? "null", color: Colors.red, icon: CupertinoIcons.xmark_circle_fill,),
-              CustomResultAnswerField(Answer: correctAnswer, color: Colors.green, icon: Icons.check_circle,),
+              CustomResultAnswerField(answer: wrongAnswer ?? "null", color: Colors.red, icon: CupertinoIcons.xmark_circle_fill,),
+              CustomResultAnswerField(answer: correctAnswer, color: Colors.green, icon: Icons.check_circle,),
             ],
           ),
         ),

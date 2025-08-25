@@ -6,6 +6,7 @@ import 'package:quizapp/view/splash/widgets/custom_circular_percentage.dart';
 import 'package:quizapp/view/splash/widgets/custom_navigationbar.dart';
 import '../../../core/resources/Models/questionModel/question_list.dart';
 import '../../../core/resources/route_manager.dart';
+import '../../../core/resources/string_manager.dart';
 import '../widgets/custom_question_card.dart';
 
 class QuizScreen extends StatefulWidget {
@@ -38,9 +39,9 @@ class _QuizScreenState extends State<QuizScreen> {
       context,
       RouteStringManager.resultScreen,
       arguments: {
-        'userName': userName,
-        'userAnswers': userAnswers,
-        'userCorrectAnswers' : _rightAnswers(),
+        StringManagerQuiz.userName : userName,
+        StringManagerQuiz.userAnswers: userAnswers,
+        StringManagerQuiz.userCorrectAnswers : _rightAnswers(),
       },
     );
   }
@@ -63,7 +64,7 @@ class _QuizScreenState extends State<QuizScreen> {
       body: Center(
         child: SingleChildScrollView(
           physics: NeverScrollableScrollPhysics(),
-          padding: EdgeInsets.all(10),
+          padding: EdgeInsets.all(PaddingSize.pad10),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
@@ -117,12 +118,12 @@ class _QuizScreenState extends State<QuizScreen> {
                         borderRadius: BorderRadius.circular(Radius.rad25),
                       ),
                       contentPadding: EdgeInsets.symmetric(
-                        horizontal: 16,
-                        vertical: 10,
+                        horizontal: PaddingSize.pad16,
+                        vertical: PaddingSize.pad10,
                       ),
                     );
                   },
-                  separatorBuilder: (context, index) => Container(height: 15),
+                  separatorBuilder: (context, index) => Container(height: Height.h15),
                 ),
               ),
             ],
@@ -131,7 +132,7 @@ class _QuizScreenState extends State<QuizScreen> {
       ),
       bottomNavigationBar: questionNumber != QuestionList.questionList.length - 1
           ? CustomNavigationbar(
-        text: "Next",
+        text: StringManagerQuiz.next,
         function: selectedValue == null
             ? () {}
             : () {
@@ -146,7 +147,7 @@ class _QuizScreenState extends State<QuizScreen> {
         colorText: Colors.white,
       )
           : CustomNavigationbar(
-        text: "Finish",
+        text: StringManagerQuiz.finish,
         function: selectedValue == null
             ? () {}
             : () {

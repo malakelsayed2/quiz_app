@@ -3,9 +3,9 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:quizapp/core/resources/Models/questionModel/question_list.dart';
 import 'package:quizapp/core/resources/color_manager.dart';
 import 'package:quizapp/core/resources/route_manager.dart';
+import 'package:quizapp/core/resources/string_manager.dart';
 import 'package:quizapp/view/splash/widgets/custom_correct_answer_card.dart';
 import 'package:quizapp/view/splash/widgets/custom_navigationbar.dart';
-
 import '../../../core/resources/size_manager.dart';
 import '../widgets/custom_wrong_answer_card.dart';
 
@@ -17,9 +17,9 @@ class ResultsScreen extends StatelessWidget {
     final args =
         ModalRoute.of(context)!.settings.arguments as Map<String, dynamic>;
 
-    final String userName = args['userName'];
-    final List<dynamic> userAnswers = args['userAnswers'];
-    final int userCorrectAnswers = args['userCorrectAnswers'] ;
+    final String userName = args[StringManagerQuiz.userName];
+    final List<dynamic> userAnswers = args[StringManagerQuiz.userAnswers];
+    final int userCorrectAnswers = args[StringManagerQuiz.userCorrectAnswers] ;
 
 
     return Scaffold(
@@ -29,10 +29,10 @@ class ResultsScreen extends StatelessWidget {
           children: [
             Container(
               padding: EdgeInsets.all(PaddingSize.pad15),
-              margin: EdgeInsetsGeometry.all(15),
+              margin: EdgeInsetsGeometry.all(PaddingSize.pad15),
               alignment: Alignment.center,
-              height: 150,
-              width: 450,
+              height: Height.h150,
+              width: Width.wid450,
               decoration: BoxDecoration(
                 boxShadow: [
                   BoxShadow(
@@ -45,24 +45,24 @@ class ResultsScreen extends StatelessWidget {
                 color: Colors.white,
               ),
               child: SizedBox(
-                width: 400,
+                width: Width.wid400,
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      "Name : $userName",
+                      "${StringManagerResults.name} : ${userName}",
                       style: GoogleFonts.quicksand(
-                        fontSize: 25,
+                        fontSize: FontSize.font25,
                         color: Color(ColorMangager.mainColor),
                         fontWeight: FontWeight.bold,
                       ),
                       textAlign: TextAlign.left,
                     ),
                     Text(
-                      "Grade : $userCorrectAnswers / ${QuestionList.questionList.length} ",
+                      "${StringManagerResults.grade} : $userCorrectAnswers / ${QuestionList.questionList.length} ",
                       style: GoogleFonts.quicksand(
-                        fontSize: 25,
+                        fontSize:FontSize.font25,
                         color: Color(ColorMangager.mainColor),
                         fontWeight: FontWeight.bold,
                       ),
@@ -72,7 +72,7 @@ class ResultsScreen extends StatelessWidget {
                 ),
               ),
             ),
-            SizedBox(height: 20),
+            SizedBox(height: Height.h20),
             Expanded(
               child: ListView.separated(
                 itemBuilder: (context, index) {
@@ -90,10 +90,10 @@ class ResultsScreen extends StatelessWidget {
                     questionNumber: index + 1,
                     correctAnswer:
                         QuestionList.questionList[index].correctAnswer,
-                    wrongAnswer: userAnswers[index],
+                    wrongAnswer: userAnswers[index] ?? "",
                   );
                 },
-                separatorBuilder: (context, index) => Container(height: 30),
+                separatorBuilder: (context, index) => Container(height: Height.h30),
                 itemCount: QuestionList.questionList.length,
               ),
             ),
@@ -101,7 +101,7 @@ class ResultsScreen extends StatelessWidget {
         ),
       ),
       bottomNavigationBar: CustomNavigationbar(
-        text: "Retake Quiz",
+        text: StringManagerResults.retakeQuiz,
         function: () => Navigator.pushReplacementNamed(
           context,
           RouteStringManager.loginScreen,

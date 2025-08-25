@@ -42,7 +42,7 @@ class LoginScreen extends StatelessWidget {
                       enabledBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(Radius.rad40),
                         borderSide: BorderSide(
-                          color: Colors.grey,
+                          color: Colors.black,
                           width: Width.wid2,
                         ),
                       ),
@@ -58,7 +58,7 @@ class LoginScreen extends StatelessWidget {
                       ),
                       label: Text(
                         StringManagerLogin.label,
-                        style: TextStyle(fontSize: FontSize.font20),
+                        style: TextStyle(fontSize: FontSize.font20 , color: Colors.black),
                       ),
                       labelStyle: TextStyle(fontSize: FontSize.font15),
                     ),
@@ -73,6 +73,11 @@ class LoginScreen extends StatelessWidget {
                     },
                   ),
                 ),
+              ),
+              Text(
+                StringManagerLogin.rules,
+                style: GoogleFonts.quicksand(fontSize: FontSize.font18 , fontWeight: FontWeight.bold),
+                textAlign: TextAlign.center,
               ),
               CustomButton(
                 text: StringManagerLogin.start,
