@@ -19,6 +19,7 @@ class ResultsScreen extends StatelessWidget {
 
     final String userName = args['userName'];
     final List<dynamic> userAnswers = args['userAnswers'];
+    final int userCorrectAnswers = args['userCorrectAnswers'] ;
 
 
     return Scaffold(
@@ -59,7 +60,7 @@ class ResultsScreen extends StatelessWidget {
                       textAlign: TextAlign.left,
                     ),
                     Text(
-                      "Grade : 4 / ${QuestionList.questionList.length} ",
+                      "Grade : $userCorrectAnswers / ${QuestionList.questionList.length} ",
                       style: GoogleFonts.quicksand(
                         fontSize: 25,
                         color: Color(ColorMangager.mainColor),

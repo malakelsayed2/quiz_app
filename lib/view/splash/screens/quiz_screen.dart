@@ -20,6 +20,18 @@ class _QuizScreenState extends State<QuizScreen> {
   int? selectedValue;
   int questionNumber = 0;
 
+
+  int _rightAnswers(){
+    Set set1 = userAnswers.toSet();
+    Set set2 = {} ;
+    for(int i = 0 ; i < QuestionList.questionList.length ; i++){
+      set2.add(QuestionList.questionList[i].correctAnswer);
+    }
+
+    Set intersection = set1.intersection(set2);
+    return intersection.length ;
+  }
+
   // New: This function handles the navigation and data passing
   void _navigateToResults(String userName) {
     Navigator.pushReplacementNamed(
@@ -28,6 +40,7 @@ class _QuizScreenState extends State<QuizScreen> {
       arguments: {
         'userName': userName,
         'userAnswers': userAnswers,
+        'userCorrectAnswers' : _rightAnswers(),
       },
     );
   }
