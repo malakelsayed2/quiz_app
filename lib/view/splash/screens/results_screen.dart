@@ -3,12 +3,10 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:quizapp/core/resources/Models/questionModel/question_list.dart';
 import 'package:quizapp/core/resources/color_manager.dart';
 import 'package:quizapp/core/resources/route_manager.dart';
-import 'package:quizapp/view/splash/screens/quiz_screen.dart';
 import 'package:quizapp/view/splash/widgets/custom_correct_answer_card.dart';
 import 'package:quizapp/view/splash/widgets/custom_navigationbar.dart';
 
 import '../../../core/resources/size_manager.dart';
-import '../widgets/custom_button.dart';
 import '../widgets/custom_wrong_answer_card.dart';
 
 class ResultsScreen extends StatelessWidget {
@@ -16,12 +14,12 @@ class ResultsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final args = ModalRoute.of(context)!.settings.arguments as Map<String, dynamic>;
+    final args =
+        ModalRoute.of(context)!.settings.arguments as Map<String, dynamic>;
 
     final String userName = args['userName'];
     final List<dynamic> userAnswers = args['userAnswers'];
 
-    int answer = 0;
 
     return Scaffold(
       backgroundColor: Color(ColorMangager.mainColor),
@@ -77,17 +75,21 @@ class ResultsScreen extends StatelessWidget {
             Expanded(
               child: ListView.separated(
                 itemBuilder: (context, index) {
-                  if (answer == 1) {
+                  if (userAnswers[index] ==
+                      QuestionList.questionList[index].correctAnswer) {
                     return CustomCorrectAnswer(
                       question: QuestionList.questionList[index].question,
                       questionNumber: index + 1,
+                      correctAnswer:
+                          QuestionList.questionList[index].correctAnswer,
                     );
                   }
                   return CustomWrongAnswer(
                     question: QuestionList.questionList[index].question,
                     questionNumber: index + 1,
                     correctAnswer:
-                        QuestionList.questionList[index].correctAnswer, wrongAnswer: userAnswers[index] ,
+                        QuestionList.questionList[index].correctAnswer,
+                    wrongAnswer: userAnswers[index],
                   );
                 },
                 separatorBuilder: (context, index) => Container(height: 30),
@@ -106,7 +108,6 @@ class ResultsScreen extends StatelessWidget {
         colorButton: Colors.white,
         colorText: Color(ColorMangager.mainColor),
       ),
-
     );
   }
 }

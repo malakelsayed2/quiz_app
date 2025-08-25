@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:quizapp/core/resources/Models/questionModel/question_list.dart';
 import 'package:quizapp/view/splash/widgets/custom_result_answer_field.dart';
 
 import '../../../core/resources/size_manager.dart';
@@ -8,7 +9,8 @@ class CustomCorrectAnswer extends StatelessWidget {
 
   final String question;
   final int questionNumber ;
-  const CustomCorrectAnswer({super.key, required this.question, required this.questionNumber});
+  final String correctAnswer ;
+  const CustomCorrectAnswer({super.key, required this.question, required this.questionNumber, required this.correctAnswer});
 
   @override
   Widget build(BuildContext context) {
@@ -69,7 +71,7 @@ class CustomCorrectAnswer extends StatelessWidget {
                 textAlign: TextAlign.left,
               ),
               Divider(thickness: 2,),
-              CustomResultAnswerField(Answer: "Correct Answer", color: Colors.green, icon: Icons.check_circle,),
+              CustomResultAnswerField(Answer: correctAnswer, color: Colors.green, icon: Icons.check_circle,),
             ],
           ),
         ),
