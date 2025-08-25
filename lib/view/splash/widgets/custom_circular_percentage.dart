@@ -1,15 +1,19 @@
 import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
-import 'package:quizapp/core/resources/route_manager.dart';
 import 'package:quizapp/core/resources/size_manager.dart';
-
 import '../../../core/resources/color_manager.dart';
 
 class CustomCircularPercentage extends StatefulWidget {
-  const CustomCircularPercentage({super.key});
+  // Add a new final variable for the callback function
+  final VoidCallback onFinish;
+
+  // Update the constructor to require the onFinish callback
+  const CustomCircularPercentage({
+    super.key,
+    required this.onFinish,
+  });
 
   @override
   State<CustomCircularPercentage> createState() =>
@@ -21,14 +25,13 @@ class _CustomCircularPercentageState extends State<CustomCircularPercentage> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     timer();
   }
 
   @override
   void dispose() {
-    // TODO: implement dispose
+    // Make sure to close the stream controller when the widget is disposed
     timerStreamController.close();
     super.dispose();
   }
@@ -36,18 +39,21 @@ class _CustomCircularPercentageState extends State<CustomCircularPercentage> {
   void timer() {
     for (int i = 0; i < 30; i++) {
       Future.delayed(Duration(seconds: i), () {
-        timerStreamController.add(i);
+        // We check if the stream is still open before adding data
+        if (!timerStreamController.isClosed) {
+          timerStreamController.add(i);
+        }
       });
     }
 
-    // after 30 seconds
-     Future.delayed(const Duration(seconds: 30), () {
+    // After 30 seconds, call the provided onFinish callback
+    Future.delayed(const Duration(seconds: 30), () {
+      // Check if the widget is still in the tree before calling the callback
       if (mounted) {
-        Navigator.pushReplacementNamed(context, RouteStringManager.resultScreen);
+        widget.onFinish();
       }
     });
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -63,6 +69,7 @@ class _CustomCircularPercentageState extends State<CustomCircularPercentage> {
         center: StreamBuilder(
           stream: timerStreamController.stream,
           builder: (context, snapshot) => Text(
+            // Use snapshot.data as the source of the timer value
             snapshot.data == null ? "0" : snapshot.data.toString(),
             style: GoogleFonts.quicksand(
               fontSize: FontSize.font30,

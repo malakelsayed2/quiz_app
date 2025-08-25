@@ -16,13 +16,25 @@ class QuizScreen extends StatefulWidget {
 }
 
 class _QuizScreenState extends State<QuizScreen> {
-
- List<dynamic> userAnswers = List.filled(QuestionList.questionList.length, null);
+  List<dynamic> userAnswers = List.filled(QuestionList.questionList.length, null);
   int? selectedValue;
   int questionNumber = 0;
 
+  // New: This function handles the navigation and data passing
+  void _navigateToResults(String userName) {
+    Navigator.pushReplacementNamed(
+      context,
+      RouteStringManager.resultScreen,
+      arguments: {
+        'userName': userName,
+        'userAnswers': userAnswers,
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
+    // We get the username from arguments as it's passed from the previous screen
     String userName = ModalRoute.of(context)!.settings.arguments as String;
 
     return Scaffold(
@@ -47,14 +59,16 @@ class _QuizScreenState extends State<QuizScreen> {
                 clipBehavior: Clip.none,
                 children: [
                   CustomQuestionCard(
-                    question:
-                        QuestionList.questionList[questionNumber].question,
+                    question: QuestionList.questionList[questionNumber].question,
                   ),
                   Positioned(
                     top: -50,
                     left: 0,
                     right: 0,
-                    child: CustomCircularPercentage(),
+                    // New: Pass the callback function to the timer widget
+                    child: CustomCircularPercentage(
+                      onFinish: () => _navigateToResults(userName),
+                    ),
                   ),
                 ],
               ),
@@ -62,10 +76,9 @@ class _QuizScreenState extends State<QuizScreen> {
               SizedBox(
                 height: Height.h500,
                 child: ListView.separated(
-                  // physics: NeverScrollableScrollPhysics(),
                   padding: EdgeInsets.all(PaddingSize.pad15),
                   itemCount:
-                      QuestionList.questionList[questionNumber].answers.length,
+                  QuestionList.questionList[questionNumber].answers.length,
                   itemBuilder: (context, index) {
                     return RadioListTile<int>(
                       value: index,
@@ -77,24 +90,18 @@ class _QuizScreenState extends State<QuizScreen> {
                         });
                       },
                       title: Text(
-                        QuestionList
-                            .questionList[questionNumber]
-                            .answers[index],
+                        QuestionList.questionList[questionNumber].answers[index],
                         style: GoogleFonts.quicksand(
                           fontWeight: FontWeight.bold,
                           fontSize: FontSize.font20,
                         ),
                       ),
                       activeColor: Color(ColorMangager.mainColor),
-                      // Purple radio
                       tileColor: selectedValue == index
                           ? Color(ColorMangager.mainColor).withOpacity(0.3)
                           : Colors.white,
-                      // White background
                       shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(
-                          Radius.rad25,
-                        ), // Rounded corners
+                        borderRadius: BorderRadius.circular(Radius.rad25),
                       ),
                       contentPadding: EdgeInsets.symmetric(
                         horizontal: 16,
@@ -109,46 +116,35 @@ class _QuizScreenState extends State<QuizScreen> {
           ),
         ),
       ),
-      bottomNavigationBar:
-          questionNumber != QuestionList.questionList.length - 1
+      bottomNavigationBar: questionNumber != QuestionList.questionList.length - 1
           ? CustomNavigationbar(
-              text: "Next",
-              function: selectedValue == null
-                  ? () {}
-                  : () {
-                      setState(() {
-                        questionNumber++;
-                        selectedValue = null;
-                      });
-                    },
-              colorButton: selectedValue == null
-                  ? Colors.grey
-                  : Color(ColorMangager.mainColor),
-              colorText: Colors.white,
-            )
+        text: "Next",
+        function: selectedValue == null
+            ? () {}
+            : () {
+          setState(() {
+            questionNumber++;
+            selectedValue = null;
+          });
+        },
+        colorButton: selectedValue == null
+            ? Colors.grey
+            : Color(ColorMangager.mainColor),
+        colorText: Colors.white,
+      )
           : CustomNavigationbar(
-              text: "Finish",
-              function: selectedValue == null
-                  ? () {}
-                  : () {
-                print(userAnswers);
-                      setState(() {
-                        Navigator.pushReplacementNamed(
-                          arguments: {
-                            'userName': userName,
-                            'userAnswers': userAnswers, // your list here
-                          },
-                          context,
-                          RouteStringManager.resultScreen,
-                        );
-                      });
-                    },
-              colorButton: selectedValue == null
-                  ? Colors.grey
-                  : Color(ColorMangager.mainColor),
-              colorText: Colors.white,
-            ),
-
+        text: "Finish",
+        function: selectedValue == null
+            ? () {}
+            : () {
+          // New: Call the new navigation function
+          _navigateToResults(userName);
+        },
+        colorButton: selectedValue == null
+            ? Colors.grey
+            : Color(ColorMangager.mainColor),
+        colorText: Colors.white,
+      ),
     );
   }
 }
