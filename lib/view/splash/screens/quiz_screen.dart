@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:quizapp/core/resources/color_manager.dart';
 import 'package:quizapp/core/resources/size_manager.dart';
-import 'package:quizapp/view/splash/widgets/custom_button.dart';
 import 'package:quizapp/view/splash/widgets/custom_circular_percentage.dart';
+import 'package:quizapp/view/splash/widgets/custom_navigationbar.dart';
 import '../../../core/resources/Models/questionModel/question_list.dart';
 import '../../../core/resources/route_manager.dart';
 import '../widgets/custom_question_card.dart';
@@ -16,6 +16,8 @@ class QuizScreen extends StatefulWidget {
 }
 
 class _QuizScreenState extends State<QuizScreen> {
+
+ List<dynamic> userAnswers = List.filled(QuestionList.questionList.length, null);
   int? selectedValue;
   int questionNumber = 0;
 
@@ -65,10 +67,11 @@ class _QuizScreenState extends State<QuizScreen> {
                   itemCount:
                       QuestionList.questionList[questionNumber].answers.length,
                   itemBuilder: (context, index) {
-                    return RadioListTile(
+                    return RadioListTile<int>(
                       value: index,
                       groupValue: selectedValue,
                       onChanged: (value) {
+                        userAnswers[questionNumber] = QuestionList.questionList[questionNumber].answers[value!];
                         setState(() {
                           selectedValue = value;
                         });
@@ -106,45 +109,46 @@ class _QuizScreenState extends State<QuizScreen> {
           ),
         ),
       ),
-      bottomNavigationBar: Padding(
-        padding: EdgeInsetsGeometry.all(25),
-        child: questionNumber != QuestionList.questionList.length - 1
-            ? CustomButton(
-                text: "Next",
-                function: selectedValue == null
-                    ? () {}
-                    : () {
-                        setState(() {
-                          questionNumber++;
-                          selectedValue = null;
-                        });
-                      },
-                colorButton: selectedValue == null
-                    ? Colors.grey
-                    : Color(ColorMangager.mainColor),
-                colorText: Colors.white,
-                fontweight: FontWeight.bold,
-              )
-            : CustomButton(
-                text: "Finish",
-                function: selectedValue == null
-                    ? () {}
-                    : () {
-                        setState(() {
-                          Navigator.pushReplacementNamed(
-                            arguments: userName,
-                            context,
-                            RouteStringManager.resultScreen,
-                          );
-                        });
-                      },
-                colorButton: selectedValue == null
-                    ? Colors.grey
-                    : Color(ColorMangager.mainColor),
-                colorText: Colors.white,
-                fontweight: FontWeight.bold,
-              ),
-      ),
+      bottomNavigationBar:
+          questionNumber != QuestionList.questionList.length - 1
+          ? CustomNavigationbar(
+              text: "Next",
+              function: selectedValue == null
+                  ? () {}
+                  : () {
+                      setState(() {
+                        questionNumber++;
+                        selectedValue = null;
+                      });
+                    },
+              colorButton: selectedValue == null
+                  ? Colors.grey
+                  : Color(ColorMangager.mainColor),
+              colorText: Colors.white,
+            )
+          : CustomNavigationbar(
+              text: "Finish",
+              function: selectedValue == null
+                  ? () {}
+                  : () {
+                print(userAnswers);
+                      setState(() {
+                        Navigator.pushReplacementNamed(
+                          arguments: {
+                            'userName': userName,
+                            'userAnswers': userAnswers, // your list here
+                          },
+                          context,
+                          RouteStringManager.resultScreen,
+                        );
+                      });
+                    },
+              colorButton: selectedValue == null
+                  ? Colors.grey
+                  : Color(ColorMangager.mainColor),
+              colorText: Colors.white,
+            ),
+
     );
   }
 }

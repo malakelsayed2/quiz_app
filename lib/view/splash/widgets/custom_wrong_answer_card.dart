@@ -9,7 +9,9 @@ class CustomWrongAnswer extends StatelessWidget {
   final String question;
   final int questionNumber ;
   final String correctAnswer ;
-  const CustomWrongAnswer({super.key, required this.question, required this.questionNumber, required this.correctAnswer});
+  final String? wrongAnswer ;
+
+  const CustomWrongAnswer({super.key, required this.question, required this.questionNumber, required this.correctAnswer, required this.wrongAnswer});
 
   @override
   Widget build(BuildContext context) {
@@ -70,7 +72,7 @@ class CustomWrongAnswer extends StatelessWidget {
                 textAlign: TextAlign.left,
               ),
               Divider(thickness: 2,),
-              CustomResultAnswerField(Answer: "Wrong Answer", color: Colors.red, icon: CupertinoIcons.xmark_circle_fill,),
+              CustomResultAnswerField(Answer: wrongAnswer ?? "null", color: Colors.red, icon: CupertinoIcons.xmark_circle_fill,),
               CustomResultAnswerField(Answer: correctAnswer, color: Colors.green, icon: Icons.check_circle,),
             ],
           ),

@@ -3,7 +3,9 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:quizapp/core/resources/Models/questionModel/question_list.dart';
 import 'package:quizapp/core/resources/color_manager.dart';
 import 'package:quizapp/core/resources/route_manager.dart';
+import 'package:quizapp/view/splash/screens/quiz_screen.dart';
 import 'package:quizapp/view/splash/widgets/custom_correct_answer_card.dart';
+import 'package:quizapp/view/splash/widgets/custom_navigationbar.dart';
 
 import '../../../core/resources/size_manager.dart';
 import '../widgets/custom_button.dart';
@@ -14,10 +16,10 @@ class ResultsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // String userName = ModalRoute
-    //     .of(context)!
-    //     .settings
-    //     .arguments as String;
+    final args = ModalRoute.of(context)!.settings.arguments as Map<String, dynamic>;
+
+    final String userName = args['userName'];
+    final List<dynamic> userAnswers = args['userAnswers'];
 
     int answer = 0;
 
@@ -50,8 +52,7 @@ class ResultsScreen extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      // "Name : $userName",
-                      "No",
+                      "Name : $userName",
                       style: GoogleFonts.quicksand(
                         fontSize: 25,
                         color: Color(ColorMangager.mainColor),
@@ -86,7 +87,7 @@ class ResultsScreen extends StatelessWidget {
                     question: QuestionList.questionList[index].question,
                     questionNumber: index + 1,
                     correctAnswer:
-                        QuestionList.questionList[index].correctAnswer,
+                        QuestionList.questionList[index].correctAnswer, wrongAnswer: userAnswers[index] ,
                   );
                 },
                 separatorBuilder: (context, index) => Container(height: 30),
@@ -96,18 +97,16 @@ class ResultsScreen extends StatelessWidget {
           ],
         ),
       ),
-      bottomNavigationBar: Padding(
-        padding: EdgeInsetsGeometry.all(25),
-        child :CustomButton(
-          text: "Retake Quiz",
-          function: (){
-            Navigator.pushReplacementNamed(context, RouteStringManager.loginScreen);
-          } ,
-          colorButton: Colors.white,
-          colorText: Color(ColorMangager.mainColor),
-          fontweight: FontWeight.bold,
+      bottomNavigationBar: CustomNavigationbar(
+        text: "Retake Quiz",
+        function: () => Navigator.pushReplacementNamed(
+          context,
+          RouteStringManager.loginScreen,
         ),
+        colorButton: Colors.white,
+        colorText: Color(ColorMangager.mainColor),
       ),
+
     );
   }
 }
