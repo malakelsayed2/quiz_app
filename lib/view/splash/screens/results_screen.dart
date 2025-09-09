@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
 import 'package:quizapp/core/resources/Models/questionModel/question_list.dart';
+import 'package:quizapp/core/resources/Models/user_details_model.dart';
 import 'package:quizapp/core/resources/color_manager.dart';
 import 'package:quizapp/core/resources/route_manager.dart';
 import 'package:quizapp/core/resources/string_manager.dart';
@@ -17,7 +19,7 @@ class ResultsScreen extends StatelessWidget {
     final args =
         ModalRoute.of(context)!.settings.arguments as Map<String, dynamic>;
 
-    final String userName = args[StringManagerQuiz.userName];
+    final String userName = Provider.of<userDetailsModel>(context).userName ;
     final List<dynamic> userAnswers = args[StringManagerQuiz.userAnswers];
     final int userCorrectAnswers = args[StringManagerQuiz.userCorrectAnswers] ;
 

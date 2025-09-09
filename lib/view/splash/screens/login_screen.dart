@@ -1,16 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
 import 'package:quizapp/core/resources/color_manager.dart';
 import 'package:quizapp/core/resources/route_manager.dart';
 import 'package:quizapp/core/resources/size_manager.dart';
 import 'package:quizapp/core/resources/string_manager.dart';
 import 'package:quizapp/view/splash/widgets/custom_button.dart';
 
+import '../../../core/resources/Models/user_details_model.dart';
+
 class LoginScreen extends StatelessWidget {
   LoginScreen({super.key});
 
   final _formKey = GlobalKey<FormState>();
-  late String userName ;
+  // late String userName ;
 
   @override
   Widget build(BuildContext context) {
@@ -69,7 +72,7 @@ class LoginScreen extends StatelessWidget {
                       return null;
                     },
                     onChanged: (value){
-                      userName = value ;
+                      Provider.of<userDetailsModel>(context , listen: false).userName = value ;
                     },
                   ),
                 ),
@@ -84,7 +87,6 @@ class LoginScreen extends StatelessWidget {
                 function: () {
                   if (_formKey.currentState!.validate()) {
                     Navigator.pushReplacementNamed(
-                      arguments: userName ,
                       context,
                       RouteStringManager.quizScreen,
                     );

@@ -9,6 +9,6 @@ class QuizzApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       routes: RouteMap.routeMap,
-      initialRoute: RouteStringManager.splashScreen,);
+      initialRoute: RouteStringManager.loginScreen,);
   }
 }

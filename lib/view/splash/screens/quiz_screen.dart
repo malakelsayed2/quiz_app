@@ -34,12 +34,12 @@ class _QuizScreenState extends State<QuizScreen> {
   }
 
   // New: This function handles the navigation and data passing
-  void _navigateToResults(String userName) {
+  void _navigateToResults() {
     Navigator.pushReplacementNamed(
       context,
       RouteStringManager.resultScreen,
       arguments: {
-        StringManagerQuiz.userName : userName,
+
         StringManagerQuiz.userAnswers: userAnswers,
         StringManagerQuiz.userCorrectAnswers : _rightAnswers(),
       },
@@ -48,8 +48,6 @@ class _QuizScreenState extends State<QuizScreen> {
 
   @override
   Widget build(BuildContext context) {
-    // We get the username from arguments as it's passed from the previous screen
-    String userName = ModalRoute.of(context)!.settings.arguments as String;
 
     return Scaffold(
       appBar: AppBar(
@@ -81,7 +79,7 @@ class _QuizScreenState extends State<QuizScreen> {
                     right: 0,
                     // New: Pass the callback function to the timer widget
                     child: CustomCircularPercentage(
-                      onFinish: () => _navigateToResults(userName),
+                      onFinish: () => _navigateToResults(),
                     ),
                   ),
                 ],
@@ -152,7 +150,7 @@ class _QuizScreenState extends State<QuizScreen> {
             ? () {}
             : () {
           // New: Call the new navigation function
-          _navigateToResults(userName);
+          _navigateToResults();
         },
         colorButton: selectedValue == null
             ? Colors.grey
